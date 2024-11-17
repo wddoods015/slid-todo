@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "@/providers/react-query";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -8,8 +9,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="font-pretendard-regular font-medium antialiased">{children}</body>
+    <html lang="ko">
+      <body className="font-pretendard font-medium antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
