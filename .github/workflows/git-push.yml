@@ -10,13 +10,10 @@ jobs:
     container: pandoc/latex
     steps:
       - uses: actions/checkout@v2
-
       - name: Install mustache (to update the date)
         run: apk add ruby && gem install mustache
-
       - name: creates output
         run: sh ./build.sh
-
       - name: Pushes to another repository
         id: push_directory
         uses: cpina/github-action-push-to-another-repository@main
@@ -29,37 +26,5 @@ jobs:
           user-email: ${{ secrets.JS_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
-
-      # 개인 레포 체크아웃
-      - name: Checkout personal repository
-        uses: actions/checkout@v2
-        with:
-          repository: catmaker/code-it-2
-          token: ${{ secrets.JS_GITHUB_KEY }}
-          path: personal-repo
-
-      # Node.js 설치
-      - name: Install Node.js
-        run: |
-          apk add --update nodejs npm
-          node --version
-          npm --version
-
-      # Storybook 빌드 및 배포
-      - name: Install dependencies and Build Storybook
-        working-directory: personal-repo
-        run: |
-          npm install
-          npm run build-storybook
-
-      # Storybook 배포
-      - name: Deploy Storybook to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          repository-name: catmaker/code-it-2
-          branch: gh-pages
-          folder: personal-repo/storybook-static
-          token: ${{ secrets.JS_GITHUB_KEY }}
-
       - name: Test get variable exported by push-to-another-repository
         run: echo $DESTINATION_CLONED_DIRECTORY
