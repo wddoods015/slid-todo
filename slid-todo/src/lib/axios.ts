@@ -62,6 +62,7 @@ instance.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as CustomInternalAxiosRequestConfig;
 
+    // 토큰 재발급 로직
     if (originalRequest && error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -78,12 +79,12 @@ instance.interceptors.response.use(
       }
     }
 
+    // 네트워크 에러 처리
     if (!error.response) {
-      return Promise.reject({
-        message: "네트워크 연결을 확인해주세요.",
-      });
+      return Promise.reject(new Error("네트워크 연결을 확인해주세요."));
     }
 
-    return Promise.reject(error.response.data);
+    // 원본 에러 객체를 그대로 전달
+    return Promise.reject(error);
   },
 );
