@@ -2,19 +2,24 @@
 
 import * as z from "zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 
-
 //import { Button } from "@/components/ui/button";
 import SubmitButton from "./Submit-button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login } from "@/actions/auth/login";
-import { loginSchema, LoginFormValues } from "./validation/loginSchema"; // 유효성검사 코드, 분리된 파일에서 가져오기
+import { useLoginMutation } from "@/hooks/auth/use-login-mutation"; // 변경된 부분
+import { loginSchema, LoginFormValues } from "./utils/validation"; // 유효성검사 코드, 분리된 파일에서 가져오기
 
 // const loginSchema = z.object({
 //   email: z.string().email("올바른 이메일 주소를 입력해주세요"),
@@ -23,37 +28,30 @@ import { loginSchema, LoginFormValues } from "./validation/loginSchema"; // 유�
 
 // type LoginFormValues = z.infer<typeof loginSchema>;
 
-
 const LoginForm = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: login, status, isError, error } = useLoginMutation(); // 변경된 부분
+
+  const isLoading = status === "pending"; // isLoading 정의
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-
       email: "", // 기본값 설정
       password: "",
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
-    setIsLoading(true);
-
-    const loginPromise = login(data)
-      .then((response) => {
+  const onSubmit = (data: LoginFormValues) => {
+    login(data, {
+      onSuccess: () => {
         router.push("/");
         router.refresh();
-        return response;
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    toast.promise(loginPromise, {
-      loading: "로그인 중...",
-      success: "로그인 성공!",
-      error: (err: Error) => err.message,
+        toast.success("로그인 성공!");
+      },
+      onError: (error: Error) => {
+        toast.error(error.message);
+      },
     });
   };
 
@@ -66,14 +64,12 @@ const LoginForm = () => {
             name="email"
             render={({ field }) => (
               <FormItem>
-
-                 <FormLabel>이메일</FormLabel> 
+                <FormLabel>이메일</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     type="email"
                     placeholder="이메일을 입력해 주세요"
-
                     className="h-12 rounded-xl"
                     disabled={isLoading}
                     autoComplete="email"
@@ -89,8 +85,7 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-
-                <FormLabel>비밀번호</FormLabel> 
+                <FormLabel>비밀번호</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -106,7 +101,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-            <SubmitButton isLoading={isLoading}/>
+        <SubmitButton isLoading={isLoading} />
         {/* <Button
           type="submit"
           className="w-full h-12 bg-gray-500 hover:bg-blue-600"
