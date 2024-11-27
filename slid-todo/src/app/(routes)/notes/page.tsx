@@ -1,10 +1,10 @@
 "use client";
 
-import NoteList from "./components/note-list";
-import NoteGoalTitle from "./components/note-goal-title";
+import NoteList from "./[noteId]/components/note-list";
+import NoteGoalTitle from "./[noteId]/components/note-goal-title";
 import { useGoalStore } from "@/stores/use-goal-store";
 
-const NotePage = () => {
+const NotesPage = () => {
   const curGoal = useGoalStore((state) => state.curGoal);
 
   return (
@@ -24,4 +24,4 @@ const NotePage = () => {
   );
 };
 
-export default NotePage;
+export default NotesPage;
