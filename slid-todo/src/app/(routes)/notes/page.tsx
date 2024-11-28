@@ -1,26 +1,12 @@
-"use client";
-
-import NoteList from "./[noteId]/components/note-list";
-import NoteGoalTitle from "./[noteId]/components/note-goal-title";
-import { useGoalStore } from "@/stores/use-goal-store";
-
 const NotesPage = () => {
-  const curGoal = useGoalStore((state) => state.curGoal);
-
   return (
-    <>
-      <div className="w-screen h-screen bg-[#F1F5F9] px-36 py-10">
-        <div className="text-lg text-slate-900 mb-5">노트 모아보기</div>
-        {curGoal ? (
-          <>
-            <NoteGoalTitle goalTitle={curGoal.title} />
-            <NoteList goalId={curGoal.id} />
-          </>
-        ) : (
-          <div>빈화면</div>
-        )}
+    <div className="flex h-screen w-screen">
+      <div className="flex-1 h-full p-4">
+        <div className="h-full w-full bg-white rounded-2xl max-w-[800px] max-h-[988px] overflow-y-auto pl-16 pt-2">
+          <h1 className="text-lg font-semibold">목표</h1>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
