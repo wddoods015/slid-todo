@@ -15,10 +15,12 @@ const NotePage = () => {
 
   return (
     <>
-      <div className="w-screen h-screen bg-[#F1F5F9] px-36 py-10">
-        <div className="text-lg text-slate-900 mb-5">노트 모아보기</div>
-        <NoteGoalTitle goalTitle={goal.title} />
-        <NoteList goalId={goal.id} />
+      <div className="h-screen bg-[#F1F5F9] px-36 py-10">
+        <div className="flex flex-col w-1/2 h-full">
+          <div className="text-lg text-slate-900 mb-5">노트 모아보기</div>
+          <NoteGoalTitle goalTitle={goal.title} />
+          <NoteList goalId={goal.id} />
+        </div>
       </div>
     </>
   );
