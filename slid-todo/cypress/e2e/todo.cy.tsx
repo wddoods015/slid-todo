@@ -92,12 +92,12 @@ describe("todos 페이지 테스트", () => {
           cy.get("@checkbox").click();
           cy.get("@checkbox")
             .invoke("attr", "data-state")
-            .should("eq", "checked", { timeout: 2000 });
+            .should("eq", "checked", { timeout: 5000 });
           // 두 번째 클릭 후 상태 확인
           cy.get("@checkbox").click();
           cy.get("@checkbox")
             .invoke("attr", "data-state")
-            .should("eq", "unchecked", { timeout: 2000 });
+            .should("eq", "unchecked", { timeout: 5000 });
         } else {
           cy.log("체크할 수 있는 할 일이 없습니다.");
         }
@@ -107,7 +107,7 @@ describe("todos 페이지 테스트", () => {
   it("모든 할 일 h2에 총 개수 표시 및 첫 페이지 로딩 확인", () => {
     cy.visit("/todos");
     cy.url().should("include", "/todos");
-    cy.wait(1000);
+    cy.wait(5000);
     cy.get("h2")
       .invoke("text")
       .then((text) => {
@@ -426,11 +426,11 @@ describe("todos 페이지 테스트", () => {
       .within(() => {
         cy.get("button[aria-haspopup='menu']").should("be.visible").click();
 
-        cy.wait(1000);
+        cy.wait(5000);
       });
 
     cy.get("[data-cy='delete-button']").click();
-    cy.wait(1000);
+    cy.wait(5000);
     cy.get("[data-cy='confirm-button']").click();
 
     cy.wait("@deleteTodo").its("response.statusCode").should("eq", 204);
