@@ -68,7 +68,6 @@ describe("todos 페이지 테스트", () => {
       "contain",
       "새로운 할 일",
     );
-
   });
   it("로그인 성공 후 todos 페이지 접근", () => {
     cy.visit("/todos");
@@ -106,7 +105,7 @@ describe("todos 페이지 테스트", () => {
   it("모든 할 일 h2에 총 개수 표시 및 첫 페이지 로딩 확인", () => {
     cy.visit("/todos");
     cy.url().should("include", "/todos");
-    cy.wait(1000);
+    cy.wait(5000);
     cy.get("h2")
       .invoke("text")
       .then((text) => {
@@ -425,11 +424,11 @@ describe("todos 페이지 테스트", () => {
       .within(() => {
         cy.get("button[aria-haspopup='menu']").should("be.visible").click();
 
-        cy.wait(1000);
+        cy.wait(5000);
       });
 
     cy.get("[data-cy='delete-button']").click();
-    cy.wait(1000);
+    cy.wait(5000);
     cy.get("[data-cy='confirm-button']").click();
 
     cy.wait("@deleteTodo").its("response.statusCode").should("eq", 204);
