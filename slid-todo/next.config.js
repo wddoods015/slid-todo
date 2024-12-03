@@ -7,5 +7,9 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === "production",
   },
   output: "standalone",
+  experimental: {
+    esmExternals: "loose",
+  },
+  output: "standalone",
 };
 module.exports = nextConfig;
