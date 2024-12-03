@@ -28,7 +28,6 @@ const AppSidebarUserInfo = () => {
       },
     });
   };
-  
 
   if (isError || !user) return <div>뭔가 잘못됐다.</div>;
 
@@ -43,7 +42,6 @@ const AppSidebarUserInfo = () => {
     });
   };
 
-  
   return (
     <div className="px-5 py-7">
       <div className="flex justify-between mb-5">
@@ -52,8 +50,9 @@ const AppSidebarUserInfo = () => {
           <div>{user.name}</div>
           <div>{user.email}</div>
 
-          <Button className="h-0 p-0 bg-transparent text-xs text-slate-400 hover:text-slate-700"
-          onClick={handleLogout}
+          <Button
+            className="h-0 p-0 bg-transparent text-xs text-slate-400 hover:text-slate-700"
+            onClick={handleLogout}
           >
             로그아웃
           </Button>

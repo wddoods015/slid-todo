@@ -1,7 +1,6 @@
-import { Password } from "@/components/ui/input.stories";
 import * as z from "zod";
 
-export const SignupSchema = z
+export const NoteCreateSchema = z
   .object({
     // 이름 입력여부 확인, 유효성 검사
     name: z.string().min(1, "이름을 입력해주세요"),
@@ -17,4 +16,4 @@ export const SignupSchema = z
     path: ["confirmPassword"], // 비밀번호 확인 필드에 오류 메시지 추가
   });
 
-export type SignupFormValues = z.infer<typeof SignupSchema>;
+export type NoteCreateFormValues = z.infer<typeof NoteCreateSchema>;
