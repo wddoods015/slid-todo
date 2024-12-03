@@ -97,16 +97,37 @@ export const useTodoActions = (todo?: Todo) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["todos"], // todos로 시작하는 모든 쿼리 무효화
+        queryKey: ["todos"],
       });
 
+      if (todo?.goal?.id) {
+        queryClient.invalidateQueries({
+          queryKey: ["goals", todo.goal.id],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["todos", todo.goal.id],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["goals", "infinite"],
+        });
+      }
+
+      queryClient.invalidateQueries({
+        queryKey: ["progress"],
+      });
+      if (todo?.goal?.id) {
+        queryClient.invalidateQueries({
+          queryKey: ["goals", todo.goal.id],
+        });
+      }
       toast.success("할 일 상태가 업데이트되었습니다.");
     },
     onError: () => {
       toast.error("상태 업데이트에 실패했습니다.");
     },
   });
-
   return {
     createTodo,
     deleteTodo,
