@@ -19,6 +19,12 @@ jobs:
           echo "NEXT_PUBLIC_TEST_EMAIL=${{ secrets.TEST_EMAIL }}" >> .env
           echo "NEXT_PUBLIC_TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}" >> .env
 
+      - name: Upload .env file as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-file
+          path: slid-todo/.env
+
   cypress-test:
     needs: create-env
     uses: ./.github/workflows/cypress-test.yml

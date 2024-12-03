@@ -3,6 +3,9 @@ name: Cypress Tests using Cypress Docker Image
 
 on:
   push:
+  pull_request:
+    branches:
+      - dev
   workflow_call:
 
 jobs:
@@ -18,9 +21,9 @@ jobs:
       - name: Create env file
         run: |
           cd slid-todo
-          echo "TEAM_ID=${{ secrets.TEAM_ID }}" > .env
-          echo "TEST_EMAIL=${{ secrets.TEST_EMAIL }}" >> .env
-          echo "TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}" >> .env
+          echo "NEXT_PUBLIC_TEAM_ID=${{ secrets.TEAM_ID }}" > .env
+          echo "NEXT_PUBLIC_TEST_EMAIL=${{ secrets.TEST_EMAIL }}" >> .env
+          echo "NEXT_PUBLIC_TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}" >> .env
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
