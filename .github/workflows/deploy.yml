@@ -6,7 +6,21 @@ on:
       - main
 
 jobs:
+  create-env:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create env file
+        run: |
+          cd slid-todo
+          echo "NEXT_PUBLIC_TEAM_ID=${{ secrets.TEAM_ID }}" > .env
+          echo "NEXT_PUBLIC_TEST_EMAIL=${{ secrets.TEST_EMAIL }}" >> .env
+          echo "NEXT_PUBLIC_TEST_PASSWORD=${{ secrets.TEST_PASSWORD }}" >> .env
+
   cypress-test:
+    needs: create-env
     uses: ./.github/workflows/cypress-test.yml
 
   # deploy-production:
