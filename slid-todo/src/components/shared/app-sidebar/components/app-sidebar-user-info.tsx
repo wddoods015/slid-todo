@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
@@ -6,6 +7,7 @@ import { useLoginStore } from "@/stores/use-login-store"; // 로그아웃 훅 �
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation"; // 로그아웃 후 로그인페이지로 라우팅을 위한
 import { useConfirmModal } from "@/stores/use-confirm-modal-store"; //로그아웃 confirm modal
+import { useQueryClient } from "@tanstack/react-query";
 
 const AppSidebarUserInfo = () => {
   const { data: user, isError } = useUserQuery();
@@ -14,6 +16,7 @@ const AppSidebarUserInfo = () => {
   const { createTodo } = useTodoActions();
   const router = useRouter();
   const { logout } = useLoginStore();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     // openConfirm 호출로 모달 열기
@@ -25,6 +28,7 @@ const AppSidebarUserInfo = () => {
         // 사용자가 모달에서 "나가기"를 클릭한 경우
         logout(); // 로그아웃 처리
         router.push("/login"); // 로그인 페이지로 라우팅
+        queryClient.resetQueries(); // logout, 모든 query reset하기,,
       },
     });
   };
