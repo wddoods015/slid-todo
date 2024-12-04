@@ -3,7 +3,7 @@ import { Note } from "@/types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-interface CreateNoteRequest {
+export interface CreateNoteRequest {
   todoId: number;
   title: string;
   content: string;

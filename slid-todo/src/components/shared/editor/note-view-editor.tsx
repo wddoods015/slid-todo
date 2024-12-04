@@ -14,7 +14,6 @@ import OrderedList from "@tiptap/extension-ordered-list";
 import ListItem from "@tiptap/extension-list-item";
 import ListKeymap from "@tiptap/extension-list-keymap";
 import TextStyle from "@tiptap/extension-text-style";
-import Placeholder from "@tiptap/extension-placeholder";
 import Color from "@tiptap/extension-color";
 
 interface NoteViewEditorProps {
