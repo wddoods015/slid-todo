@@ -2,16 +2,16 @@ import Link from "next/link";
 import LinkDeleteSVG from "./link-delete-svg";
 import LinkSVG from "./link-svg";
 import { NoteEditFormValues } from "@/app/(routes)/notes/edit/[noteId]/components/utils/edit-validation";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
 interface LinkEmbedProps {
-  url: string;
+  url: string | null;
 }
 
 const LinkEmbed = ({ url }: LinkEmbedProps) => {
-  if (url === "") return;
-
   const { setValue } = useFormContext<NoteEditFormValues>();
+
+  if (url === "" || !url) return;
 
   const onClickDeleteBtn = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
