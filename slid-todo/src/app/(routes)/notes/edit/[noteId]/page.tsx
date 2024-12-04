@@ -16,7 +16,6 @@ const NoteEditPage = () => {
   const { noteId } = useParams();
   const { note, todo, isLoading, isError } = useNoteWithTodo(Number(noteId));
   const { updateNote } = useNoteActions(note);
-  const { updateFormData } = useNoteEditStore();
 
   const form = useForm<NoteEditFormValues>({
     resolver: zodResolver(NoteEditSchema),

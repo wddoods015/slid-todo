@@ -6,7 +6,6 @@ import { Note } from "@/types/note";
 import LinkEmbed from "@/components/shared/link-embed/link-embed";
 import { ensureHttps } from "@/utils/url";
 import NoteWriteEditor from "@/components/shared/editor/note-write-editor";
-import { useEffect } from "react";
 
 interface NoteEditFormProps {
   note: Note;
@@ -51,8 +50,7 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
             )}
           />
         ) : (
-          // TODO : 링크 추가
-          <div>추가</div>
+          ""
         )}
 
         <FormField
