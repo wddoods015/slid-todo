@@ -17,13 +17,15 @@ import Placeholder from "@tiptap/extension-placeholder";
 
 import { cn } from "@/utils/cn";
 import { Color } from "@tiptap/extension-color";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface NoteWriteEditorProps {
-  content?: string;
+  content: string | null;
   onContentChange: (value: string) => void;
 }
 
-const NoteWriteEditor = ({ content = "", onContentChange }: NoteWriteEditorProps) => {
+const NoteWriteEditor = ({ content, onContentChange }: NoteWriteEditorProps) => {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -62,6 +64,12 @@ const NoteWriteEditor = ({ content = "", onContentChange }: NoteWriteEditorProps
       onContentChange(html);
     },
   });
+
+  useEffect(() => {
+    if (editor && editor.getHTML() !== content) {
+      editor.commands.setContent(content || "");
+    }
+  }, [content, editor]);
 
   return (
     <div>

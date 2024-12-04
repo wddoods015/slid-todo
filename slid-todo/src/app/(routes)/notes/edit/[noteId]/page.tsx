@@ -29,11 +29,16 @@ const NoteEditPage = () => {
 
   useEffect(() => {
     if (note) {
-      form.setValue("title", note.title);
-      form.setValue("content", note.content);
-      form.setValue("linkUrl", note.linkUrl || "");
+      form.reset({
+        title: note.title,
+        content: note.content,
+        linkUrl: note.linkUrl,
+      });
     }
-  }, [note, form]);
+  }, [note]);
+
+  if (isLoading) return <Loading />;
+  if (!note || !todo) return <div>노트 혹은 투두가 없습니다.</div>;
 
   const handlePreSave = () => {
     // TODO 임시 저장 로직 처리
@@ -61,7 +66,7 @@ const NoteEditPage = () => {
           <div>
             <NoteEditHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
             <NoteEditInfo todo={todo} />
-            <NoteEditForm form={form} note={note} />
+            <NoteEditForm form={form} />
           </div>
         </div>
       </div>

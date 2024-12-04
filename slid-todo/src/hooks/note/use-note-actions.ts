@@ -45,9 +45,9 @@ export const useNoteActions = (note?: Note) => {
   const { mutate: updateNote } = useMutation({
     mutationFn: async ({ updatedNote }: { noteId: number; updatedNote: UpdateNoteRequest }) => {
       const requestData = {
-        ...(updatedNote.title && { title: updatedNote.title }),
-        ...(updatedNote.content && { content: updatedNote.content }),
-        ...(updatedNote.linkUrl && { linkUrl: updatedNote.linkUrl }),
+        title: updatedNote.title ?? null,
+        content: updatedNote.content ?? null,
+        linkUrl: updatedNote.linkUrl ? updatedNote.linkUrl : null,
       };
 
       const response = await instance.patch(`/notes/${note?.id}`, requestData);

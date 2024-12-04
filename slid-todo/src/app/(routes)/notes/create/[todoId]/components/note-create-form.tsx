@@ -35,21 +35,17 @@ const NoteCreateForm = ({ form }: NoteCreateFormProps) => {
           )}
         />
 
-        {form.watch("linkUrl") ? (
-          <FormField
-            control={form.control}
-            name="linkUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <LinkEmbed url={field.value ? ensureHttps(field.value) : ""} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ) : (
-          ""
-        )}
+        <FormField
+          control={form.control}
+          name="linkUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <LinkEmbed {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -58,7 +54,7 @@ const NoteCreateForm = ({ form }: NoteCreateFormProps) => {
             <FormItem>
               <FormControl>
                 <NoteWriteEditor
-                  {...field}
+                  content={field.value}
                   onContentChange={(value: string) => field.onChange(value)}
                 />
               </FormControl>

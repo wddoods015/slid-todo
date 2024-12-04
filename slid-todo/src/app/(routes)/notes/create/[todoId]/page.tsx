@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import NoteCreateHeader from "./components/note-create-header";
 import NoteCreateInfo from "./components/note-create-info";
 import NoteCreateForm from "./components/note-create-form";
+import { useEffect } from "react";
 
 const NoteCreatePage = () => {
   const { todoId } = useParams();
