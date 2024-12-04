@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
@@ -8,7 +9,9 @@ import { useRouter } from "next/navigation";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import Skeleton from "@/components/shared/skeleton";
-
+import { useQueryClient } from "@tanstack/react-query";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { Profile } from "@/public/svgs";
 const AppSidebarUserInfo = () => {
   const { data: user, isError, isLoading } = useUserQuery();
   const { onOpen: onOpenFormModal } = useFormModal();
@@ -16,6 +19,7 @@ const AppSidebarUserInfo = () => {
   const { createTodo } = useTodoActions();
   const router = useRouter();
   const { logout } = useLoginStore();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     openConfirm({
@@ -23,8 +27,10 @@ const AppSidebarUserInfo = () => {
       confirmText: "로그아웃",
       variant: "danger",
       onConfirm: () => {
-        logout();
-        router.push("/login");
+        // 사용자가 모달에서 "나가기"를 클릭한 경우
+        logout(); // 로그아웃 처리
+        router.push("/login"); // 로그인 페이지로 라우팅
+        queryClient.resetQueries(); // logout, 모든 query reset하기,,
       },
     });
   };
@@ -64,14 +70,36 @@ const AppSidebarUserInfo = () => {
 
   return (
     <div className="px-5 rounded-lg">
-      <div className="flex mb-5 gap-5">
-        <div className="w-[64px] h-[64px] bg-blue-600 rounded-xl min-w-[64px] min-h-[64px]"></div>
-        <div className="text-[14px] text-slate-800 dark:text-slate-300 w-full">
+      <div className="flex mb-5 gap-5 items-center">
+        <Profile className="w-[64px] h-[64px] bg-blue-600 rounded-xl min-w-[64px] min-h-[64px]" />
+        <div className="text-[14px] text-slate-800 dark:text-slate-300 w-full overflow-hidden">
           <div className="flex justify-between items-center w-full">
-            <p className="text-sm font-semibold">{user.name}</p>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <p className="text-sm font-semibold truncate overflow-hidden text-ellipsis">
+                    {user.name}
+                  </p>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{user.name}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             <ThemeToggle />
           </div>
-          <p className="text-sm font-medium">{user.email}</p>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <p className="text-sm font-medium truncate overflow-hidden text-ellipsis">
+                  {user.email}
+                </p>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{user.email}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
           <Button
             className="bg-transparent hover:bg-transparent text-xs text-slate-400 hover:text-slate-700 p-0 h-0 mt-4 dark:hover:text-slate-300"
