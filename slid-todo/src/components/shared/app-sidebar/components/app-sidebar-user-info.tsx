@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
@@ -8,6 +9,8 @@ import { useRouter } from "next/navigation";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import Skeleton from "@/components/shared/skeleton";
+import { useQueryClient } from '@tanstack/react-query';
+
 
 const AppSidebarUserInfo = () => {
   const { data: user, isError, isLoading } = useUserQuery();
@@ -16,6 +19,7 @@ const AppSidebarUserInfo = () => {
   const { createTodo } = useTodoActions();
   const router = useRouter();
   const { logout } = useLoginStore();
+  const queryClient = useQueryClient();
 
   const handleLogout = () => {
     openConfirm({
@@ -23,8 +27,10 @@ const AppSidebarUserInfo = () => {
       confirmText: "로그아웃",
       variant: "danger",
       onConfirm: () => {
-        logout();
-        router.push("/login");
+        // 사용자가 모달에서 "나가기"를 클릭한 경우
+        logout(); // 로그아웃 처리
+        router.push("/login"); // 로그인 페이지로 라우팅
+        queryClient.resetQueries(); // logout, 모든 query reset하기,,
       },
     });
   };
