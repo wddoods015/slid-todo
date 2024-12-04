@@ -16,11 +16,13 @@ import AppSidebarDashBoard from "./components/app-sidebar-dashboard";
 import AppSidebarGoal from "./components/app-sidebar-goal";
 
 const AppSidebar = () => {
-  const { open } = useSidebar();
+  const { open, setOpen } = useSidebar();
 
   return (
     <>
-      <Sidebar className="bg-white">
+      {/* open이 true일 때 백그라운드 덮기 */}
+      {/* 사이드바는 z-index로 백그라운드 위에 위치하도록 설정 */}
+      <Sidebar className="bg-white z-30 fixed top-0 left-0 h-full">
         <SidebarHeader>
           <AppSidebarHeader />
         </SidebarHeader>
@@ -35,6 +37,12 @@ const AppSidebar = () => {
           <AppSidebarFooter />
         </SidebarFooter>
       </Sidebar>
+      <div
+        onClick={() => setOpen(!open)}
+        className={
+          open ? "lg:hidden sm:fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20" : ""
+        }
+      />
 
       {!open && <AppSidebarTrigger />}
     </>
