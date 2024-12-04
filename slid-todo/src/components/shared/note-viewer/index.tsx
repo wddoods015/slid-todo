@@ -61,7 +61,7 @@ export const NoteViewer = ({ isOpen, onOpenChange, todo, noteData }: NoteViewerP
       >
         <SheetTitle className="sr-only">{todo.title} 노트</SheetTitle>
         <NoteHeader todo={todo} noteData={noteData} onClose={() => onOpenChange(false)} />
-        <NoteContent noteData={noteData} />
+        {noteData && <NoteContent noteData={noteData} />}
       </SheetContent>
     </Sheet>
   );
