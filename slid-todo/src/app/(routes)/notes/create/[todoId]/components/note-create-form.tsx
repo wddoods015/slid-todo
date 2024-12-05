@@ -1,16 +1,16 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn } from "react-hook-form";
-import { NoteEditFormValues } from "./utils/edit-validation";
+import { NoteCreateFormValues } from "./utils/create-validation";
 import LinkEmbed from "@/components/shared/link-embed/link-embed";
 import { ensureHttps } from "@/utils/url";
 import NoteWriteEditor from "@/components/shared/editor/note-write-editor";
 
-interface NoteEditFormProps {
-  form: UseFormReturn<NoteEditFormValues>;
+interface NoteCreateFormProps {
+  form: UseFormReturn<NoteCreateFormValues>;
 }
 
-const NoteEditForm = ({ form }: NoteEditFormProps) => {
+const NoteCreateForm = ({ form }: NoteCreateFormProps) => {
   return (
     <form className="">
       <div className="space-y-2">
@@ -34,6 +34,7 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="linkUrl"
@@ -54,11 +55,11 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
               <FormControl>
                 <NoteWriteEditor
                   content={field.value}
-                  onContentChange={(value: string) => {
-                    field.onChange(value);
-                  }}
+                  onContentChange={(value: string) => field.onChange(value)}
                 />
               </FormControl>
+              {/* TODO: FormMessage 안뜸 */}
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -67,4 +68,4 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
   );
 };
 
-export default NoteEditForm;
+export default NoteCreateForm;

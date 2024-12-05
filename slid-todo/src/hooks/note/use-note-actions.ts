@@ -3,6 +3,13 @@ import { Note } from "@/types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
+export interface CreateNoteRequest {
+  todoId: number;
+  title: string;
+  content: string;
+  linkUrl?: string | null;
+}
+
 interface UpdateNoteRequest {
   title?: string;
   content?: string;
@@ -12,33 +19,35 @@ interface UpdateNoteRequest {
 export const useNoteActions = (note?: Note) => {
   const queryClient = useQueryClient();
 
-  //   const { mutate: createTodo } = useMutation({
-  //     mutationFn: async (newTodo: CreateTodoRequest) => {
-  //       const requestData = {
-  //         title: newTodo.title,
-  //         ...(newTodo.fileUrl && { fileUrl: newTodo.fileUrl }),
-  //         ...(newTodo.linkUrl && { linkUrl: newTodo.linkUrl }),
-  //         ...(newTodo.goalId && { goalId: newTodo.goalId }),
-  //       };
+  const { mutate: createNote } = useMutation({
+    mutationFn: async (newNote: CreateNoteRequest) => {
+      const requestData = {
+        ...(newNote.todoId && { todoId: newNote.todoId }),
+        ...(newNote.title && { title: newNote.title }),
+        ...(newNote.content && { content: newNote.content }),
+        ...(newNote.linkUrl && { linkUrl: newNote.linkUrl }),
+      };
 
-  //       const response = await instance.post("/todos", requestData);
-  //       return response.data;
-  //     },
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries({ queryKey: ["notes"] });
-  //       toast.success("할 일이 추가되었습니다.");
-  //     },
-  //     onError: (error) => {
-  //       console.error("API Error:", error);
-  //       toast.error("추가에 실패했습니다.");
-  //     },
-  //   });
+      const response = await instance.post("/notes", requestData);
+
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notes"] });
+      toast.success("노트가 작성되었습니다.");
+    },
+    onError: (error) => {
+      console.error("API Error:", error);
+      toast.error("작성에 실패했습니다.");
+    },
+  });
+
   const { mutate: updateNote } = useMutation({
     mutationFn: async ({ updatedNote }: { noteId: number; updatedNote: UpdateNoteRequest }) => {
       const requestData = {
-        ...(updatedNote.title && { title: updatedNote.title }),
-        ...(updatedNote.content && { content: updatedNote.content }),
-        ...(updatedNote.linkUrl && { linkUrl: updatedNote.linkUrl }),
+        title: updatedNote.title ?? null,
+        content: updatedNote.content ?? null,
+        linkUrl: updatedNote.linkUrl ? updatedNote.linkUrl : null,
       };
 
       const response = await instance.patch(`/notes/${note?.id}`, requestData);
@@ -72,6 +81,7 @@ export const useNoteActions = (note?: Note) => {
   });
 
   return {
+    createNote,
     deleteNote,
     updateNote,
   };

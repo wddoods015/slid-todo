@@ -6,17 +6,25 @@ import NoteEditHeader from "./components/note-edit-header";
 import NoteEditInfo from "./components/note-edit-info";
 import NoteEditForm from "./components/note-edit-form";
 import { useNoteActions } from "@/hooks/note/use-note-actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNoteEditStore } from "@/stores/use-note-store";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { NoteEditFormValues, NoteEditSchema } from "./components/utils/edit-validation";
+import toast from "react-hot-toast";
+import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 
 const NoteEditPage = () => {
   const { noteId } = useParams();
+  const [preSave, setPreSave] = useState({
+    title: "",
+    content: "",
+    linkUrl: "",
+  });
+  const saveKey = `${noteId}-edit-note`;
   const { note, todo, isLoading, isError } = useNoteWithTodo(Number(noteId));
   const { updateNote } = useNoteActions(note);
-  const { updateFormData } = useNoteEditStore();
+  const { onOpen: openConfirm } = useConfirmModal();
 
   const form = useForm<NoteEditFormValues>({
     resolver: zodResolver(NoteEditSchema),
@@ -30,14 +38,54 @@ const NoteEditPage = () => {
 
   useEffect(() => {
     if (note) {
-      form.setValue("title", note.title);
-      form.setValue("content", note.content);
-      form.setValue("linkUrl", note.linkUrl || "");
+      form.reset({
+        title: note.title,
+        content: note.content,
+        linkUrl: note.linkUrl,
+      });
     }
-  }, [note, form]);
+  }, [note]);
+
+  useEffect(() => {
+    const preData = localStorage.getItem(saveKey);
+    if (!preData) return;
+
+    const data = JSON.parse(preData);
+
+    if (note && note.title === data.title) return;
+
+    setPreSave(data);
+
+    openConfirm({
+      title: `'${data.title}' 제목의 노트를 불러오시겠습니까?`,
+      confirmText: "불러오기",
+      variant: "info",
+      onConfirm: () => {
+        form.reset({
+          title: data.title,
+          content: data.content,
+          linkUrl: data.linkUrl,
+        });
+
+        // TODO: 정책문제일듯한데 임시저장 데이터는 어느 시점에 지울지..
+        localStorage.removeItem(saveKey);
+      },
+    });
+  }, [noteId, form]);
+
+  if (isLoading) return <Loading />;
+  if (!note || !todo) return <div>노트 혹은 투두가 없습니다.</div>;
 
   const handlePreSave = () => {
-    // TODO 임시 저장 로직 처리
+    const preSaveData = {
+      title: form.getValues("title"),
+      content: form.getValues("content"),
+      linkUrl: form.getValues("linkUrl"),
+    };
+
+    localStorage.setItem(saveKey, JSON.stringify(preSaveData));
+
+    toast.success("임시저장에 성공했습니다.");
   };
 
   const handleUpdate = () => {
@@ -62,7 +110,7 @@ const NoteEditPage = () => {
           <div>
             <NoteEditHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
             <NoteEditInfo todo={todo} />
-            <NoteEditForm form={form} note={note} />
+            <NoteEditForm form={form} />
           </div>
         </div>
       </div>
