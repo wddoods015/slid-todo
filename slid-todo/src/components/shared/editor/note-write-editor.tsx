@@ -60,7 +60,8 @@ const NoteWriteEditor = ({ content, onContentChange }: NoteWriteEditorProps) => 
       },
     },
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
+      let html = editor.getHTML();
+      if (html === "<p></p>") html = "";
       onContentChange(html);
     },
   });
