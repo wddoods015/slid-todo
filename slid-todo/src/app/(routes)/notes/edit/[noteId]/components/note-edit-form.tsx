@@ -1,15 +1,12 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { FormProvider, useFormContext, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { NoteEditFormValues } from "./utils/edit-validation";
-import { Note } from "@/types/note";
 import LinkEmbed from "@/components/shared/link-embed/link-embed";
 import { ensureHttps } from "@/utils/url";
 import NoteWriteEditor from "@/components/shared/editor/note-write-editor";
-import { useEffect } from "react";
 
 interface NoteEditFormProps {
-  note: Note;
   form: UseFormReturn<NoteEditFormValues>;
 }
 
@@ -37,23 +34,17 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
             </FormItem>
           )}
         />
-
-        {form.watch("linkUrl") ? (
-          <FormField
-            control={form.control}
-            name="linkUrl"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <LinkEmbed url={ensureHttps(field.value)} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-        ) : (
-          // TODO : 링크 추가
-          <div>추가</div>
-        )}
+        <FormField
+          control={form.control}
+          name="linkUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <LinkEmbed {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
 
         <FormField
           control={form.control}
@@ -63,7 +54,9 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
               <FormControl>
                 <NoteWriteEditor
                   content={field.value}
-                  onContentChange={(value: string) => field.onChange(value)}
+                  onContentChange={(value: string) => {
+                    field.onChange(value);
+                  }}
                 />
               </FormControl>
             </FormItem>

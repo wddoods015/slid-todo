@@ -20,10 +20,20 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "fill-progress": {
+          "0%": { width: "0%" },
+          "100%": { width: "100%" },
+        },
+        "circle-progress": {
+          "0%": { strokeDashoffset: "100%" },
+          "100%": { strokeDashoffset: "0%" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.5s ease-out",
         "fade-in": "fade-in 0.5s ease-out",
+        "fill-progress": "fill-progress 1s ease-in-out forwards",
+        "circle-progress": "circle-progress 1.5s ease-in-out forwards",
       },
 
       fontFamily: {

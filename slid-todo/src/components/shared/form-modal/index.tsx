@@ -8,9 +8,10 @@ import { FormHeader } from "./form-header";
 import { FormContent } from "./form-content";
 import { FormFooter } from "./form-footer";
 import { useFormModalLogic } from "./use-form-modal";
+import LinkModal from "../editor/link-modal";
 
 export const FormModal = () => {
-  const { isOpen, data, onClose } = useFormModal();
+  const { isOpen, data, onClose, onSubmit } = useFormModal();
   const { onOpen: openConfirm } = useConfirmModal();
   const {
     form,
@@ -43,25 +44,29 @@ export const FormModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={handleCloseAttempt}>
       <DialogContent className="max-w-[400px] p-0 gap-0" data-cy="form-modal">
-        <FormProvider {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <FormHeader
-              type={data.type}
-              mode={data.mode}
-              onClose={() => handleCloseAttempt(false)}
-            />
-            <FormContent
-              type={data.type}
-              mode={data.mode}
-              activeField={activeField}
-              selectedFile={selectedFile}
-              onFileSelect={handleFileSelect}
-              onFileRemove={handleFileRemove}
-              setActiveField={setActiveField}
-            />
-            <FormFooter mode={data.mode} isValid={isValid} />
-          </form>
-        </FormProvider>
+        {data.type !== "link" && data.mode !== "add" ? (
+          <FormProvider {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
+              <FormHeader
+                type={data.type}
+                mode={data.mode}
+                onClose={() => handleCloseAttempt(false)}
+              />
+              <FormContent
+                type={data.type}
+                mode={data.mode}
+                activeField={activeField}
+                selectedFile={selectedFile}
+                onFileSelect={handleFileSelect}
+                onFileRemove={handleFileRemove}
+                setActiveField={setActiveField}
+              />
+              <FormFooter mode={data.mode} isValid={isValid} />
+            </form>
+          </FormProvider>
+        ) : (
+          <LinkModal onSubmit={onSubmit} />
+        )}
       </DialogContent>
     </Dialog>
   );
