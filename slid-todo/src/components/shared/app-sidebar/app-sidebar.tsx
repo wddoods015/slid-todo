@@ -22,13 +22,13 @@ const AppSidebar = () => {
     <>
       {/* open이 true일 때 백그라운드 덮기 */}
       {/* 사이드바는 z-index로 백그라운드 위에 위치하도록 설정 */}
-      <Sidebar className="bg-white z-30 fixed top-0 left-0 h-full">
+      <Sidebar className="bg-white">
         <SidebarHeader>
           <AppSidebarHeader />
         </SidebarHeader>
         <SidebarContent className="w-full h-1/2">
           <AppSidebarUserInfo />
-          <Separator className="border-[1px] mt-5" />
+          <Separator className="border-[1px]" />
           <AppSidebarDashBoard />
           <Separator className="border-[1px]" />
           <AppSidebarGoal />
@@ -37,12 +37,12 @@ const AppSidebar = () => {
           <AppSidebarFooter />
         </SidebarFooter>
       </Sidebar>
-      <div
-        onClick={() => setOpen(!open)}
-        className={
-          open ? "lg:hidden sm:fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20" : ""
-        }
-      />
+      {/* {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black opacity-50 z-20 lg:hidden"
+        />
+      )} */}
 
       {!open && <AppSidebarTrigger />}
     </>

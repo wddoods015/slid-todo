@@ -6,7 +6,7 @@ interface CircleProgressProps {
 const CircleProgress = ({ data }: CircleProgressProps) => {
   return (
     <div className="flex-1 flex justify-center items-center">
-      <Circle progress={data} className="w-40 h-40" />
+      <Circle progress={data} className="w-45 h-45" />
     </div>
   );
 };
