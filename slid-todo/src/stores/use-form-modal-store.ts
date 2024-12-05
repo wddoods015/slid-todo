@@ -1,7 +1,8 @@
+import { UseFormReturn } from "react-hook-form";
 import { create } from "zustand";
 
-export type ModalType = "todo" | "note" | "goal";
-export type ModalMode = "create" | "edit";
+export type ModalType = "todo" | "note" | "goal" | "link";
+export type ModalMode = "create" | "edit" | "add";
 
 export interface FormData {
   id: number;

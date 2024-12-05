@@ -8,16 +8,31 @@ import {
   Link,
   List,
   ListOrdered,
-  PaintBucket,
   Underline,
 } from "lucide-react";
 import PaintBucketInput from "./paint-bucket-input";
+import { useFormModal } from "@/stores/use-form-modal-store";
+import { useFormContext } from "react-hook-form";
 
 interface ToolBarProps {
   editor: Editor | null;
 }
 const NoteWriteToolbar = ({ editor }: ToolBarProps) => {
+  const { onOpen: onOpenLinkModal } = useFormModal();
+  const { setValue } = useFormContext();
+
   if (!editor) return null;
+
+  const onClickLinkBtn = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    onOpenLinkModal({
+      type: "link",
+      mode: "add",
+      onSubmit: (data) => {
+        setValue("linkUrl", data.linkUrl || "");
+      },
+    });
+  };
 
   return (
     <div className="w-full flex items-center justify-between gap-2 px-[16px] py-[10px] border-[1px] sm:gap-8 text-slate-700 rounded-full border-slate-200">
@@ -64,7 +79,10 @@ const NoteWriteToolbar = ({ editor }: ToolBarProps) => {
         </div>
       </div>
 
-      <div className="w-[24px] h-[24px]   hover:cursor-pointer bg-slate-200 hover:bg-slate-500 rounded-full">
+      <div
+        className="w-[24px] h-[24px]   hover:cursor-pointer bg-slate-200 hover:bg-slate-500 rounded-full"
+        onClick={(event) => onClickLinkBtn(event)}
+      >
         <Link className="p-1" />
       </div>
     </div>

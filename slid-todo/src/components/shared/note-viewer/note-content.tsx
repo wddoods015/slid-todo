@@ -1,8 +1,10 @@
 import { Note } from "@/types/note";
 import Link from "next/link";
 import { ensureHttps } from "@/utils/url";
+import NoteWriteEditor from "../editor/note-write-editor";
+import NoteViewEditor from "../editor/note-view-editor";
 interface NoteContentProps {
-  noteData: Note | null;
+  noteData: Note;
 }
 
 export const NoteContent = ({ noteData }: NoteContentProps) => {
@@ -21,7 +23,9 @@ export const NoteContent = ({ noteData }: NoteContentProps) => {
             </Link>
           </div>
         )}
-        <div className="whitespace-pre-wrap text-gray-600">{noteData?.content}</div>
+        <div className="whitespace-pre-wrap text-gray-600">
+          <NoteViewEditor content={noteData.content} />
+        </div>
       </section>
     </article>
   );
