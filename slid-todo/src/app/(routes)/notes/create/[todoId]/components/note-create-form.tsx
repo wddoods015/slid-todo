@@ -24,7 +24,7 @@ const NoteCreateForm = ({ form }: NoteCreateFormProps) => {
                   {...field}
                   type="text"
                   placeholder="제목을 입력해 주세요"
-                  className="border-x-0 border-y-2 h-[50px] rounded-none border-slate-200 text-lg text-slate-800 py-7"
+                  className="border-x-0 border-y-2 h-[50px] rounded-none border-slate-200 text-lg text-slate-800 py-7 dark:border-none dark:bg-gray-800 dark:text-slate-200"
                   onBlur={field.onBlur}
                   // disabled={isLoading}
                   autoComplete="text"

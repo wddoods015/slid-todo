@@ -55,7 +55,7 @@ const NoteWriteEditor = ({ content, onContentChange }: NoteWriteEditorProps) => 
     editorProps: {
       attributes: {
         class: cn(
-          "[&>div:first-child>div:first-child]:min-h-[500px] prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc min-h-[500px] p-2 outline-1 [&_p]:m-0 [&_p]:leading-normal",
+          "[&>div:first-child>div:first-child]:min-h-[500px] prose max-w-none [&_ol]:list-decimal [&_ul]:list-disc min-h-[500px] p-2 outline-1 [&_p]:m-0 [&_p]:leading-normal dark:bg-gray-800",
         ),
       },
     },

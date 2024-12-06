@@ -1,10 +1,14 @@
 import { cn } from "@/utils/cn";
+import { useTheme } from "next-themes";
 
 interface NoteListProps {
   className?: string;
 }
 
 const NoteList = ({ className }: NoteListProps) => {
+  const { theme } = useTheme();
+  const fillColor = theme === "dark" ? "black" : "#DBEAFE";
+
   return (
     <svg
       className={cn("w-7 h-7", className)}
@@ -12,7 +16,7 @@ const NoteList = ({ className }: NoteListProps) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect width="28" height="28" rx="8.4" fill="#DBEAFE" />
+      <rect width="28" height="28" rx="8.4" fill={fillColor} />
       <path
         d="M6.92163 16.7172L13.8366 13.8056C13.9411 13.7616 14.0589 13.7616 14.1634 13.8056L21.0784 16.7172C21.4219 16.8618 21.4219 17.3486 21.0784 17.4933L14.1634 20.4049C14.0589 20.4489 13.9411 20.4489 13.8366 20.4049L6.92164 17.4933C6.57809 17.3486 6.57809 16.8618 6.92163 16.7172Z"
         fill="white"
