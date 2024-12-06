@@ -15,9 +15,10 @@ export const LinkButton = ({ url }: LinkButtonProps) => {
           variant="ghost"
           className="p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full aspect-square w-8 h-8"
           title={url}
+          aria-label="link-button"
         >
           <a href={ensureHttps(url)} data-cy="link-button" target="_blank">
-            <LinkIcon className="text-blue-400" />
+            <LinkIcon className="text-blue-400" aria-label="link-button-icon" />
           </a>
         </Button>
       </TooltipTrigger>
