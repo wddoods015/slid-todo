@@ -3,8 +3,12 @@ import { useGoal } from "@/hooks/goals/use-goal";
 import { useParams } from "next/navigation";
 import { GoalHeader } from "./components/goal-header";
 import { ViewNotesButton } from "./components/view-notes-button";
-import { GoalListContent } from "./components/goal-list-content";
 import { Loading } from "@/components/shared/loading";
+import dynamic from "next/dynamic";
+
+const GoalListContent = dynamic(() => import("./components/goal-list-content"), {
+  loading: () => <Loading />,
+});
 
 const GoalPage = () => {
   const { goalId } = useParams();
