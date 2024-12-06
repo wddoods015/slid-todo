@@ -6,10 +6,11 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  output: "standalone",
   experimental: {
     esmExternals: "loose",
   },
   output: "standalone",
+  productionBrowserSourceMaps: true, // 소스맵 생성 활성화
 };
+
 module.exports = nextConfig;

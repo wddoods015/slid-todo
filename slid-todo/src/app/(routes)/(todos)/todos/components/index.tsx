@@ -7,7 +7,6 @@ import TodoFilter from "./todo-filter";
 import { TodoListContent } from "./todo-list-content";
 import { TabType } from "./utils";
 import { Todo } from "@/types/todo";
-import { Loading } from "@/components/shared/loading";
 import { ScrollArea } from "@/components/ui/scroll-area";
 interface TodoPage {
   todos: Todo[];
@@ -21,9 +20,7 @@ interface TodoData {
 
 const TodoList = () => {
   const [activeTab, setActiveTab] = useState<TabType>("all");
-  const { data, isLoading } = useTodosInfinite();
-
-  if (isLoading) return <Loading />;
+  const { data } = useTodosInfinite();
 
   const todoData = data as TodoData;
 

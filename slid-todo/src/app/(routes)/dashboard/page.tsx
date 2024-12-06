@@ -15,7 +15,7 @@ const DashBoard = () => {
   const isLoading = isRecentLoading || isProgressLoading || isGoalLoading;
 
   if (isLoading) {
-    return <Loading fullScreen={false} size={150} />;
+    return <Loading fullScreen={false} size="md" />;
   }
 
   return (
