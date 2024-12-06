@@ -67,6 +67,7 @@ export const MoreMenu = ({ onDelete, onEdit }: MoreMenuProps) => {
                 variant="ghost"
                 className="p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full w-8 h-8"
                 data-cy="more-button"
+                aria-label="more-button"
               >
                 <MoreHorizontal className="w-4 h-4" />
               </Button>

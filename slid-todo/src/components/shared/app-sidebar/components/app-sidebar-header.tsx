@@ -20,14 +20,16 @@ export const AppSidebarHeader = () => {
 
   return (
     <div className="flex justify-between items-center px-2 py-2">
-      <Link href="/dashboard">
+      <Link href="/dashboard" aria-label="Go to dashboard">
         <div className="dark:hidden flex items-center gap-2">
-          <LogoIcon />
-          <LogoText />
+          <LogoIcon aria-hidden="true" />
+          <LogoText aria-hidden="true" />
+          <span className="sr-only">Dashboard home</span>
         </div>
         <div className="hidden dark:flex items-center gap-2">
-          <LogoIcon />
-          <LogoTextDark />
+          <LogoIcon aria-hidden="true" />
+          <LogoTextDark aria-hidden="true" />
+          <span className="sr-only">Dashboard home</span>
         </div>
       </Link>
       <CollapseButton />

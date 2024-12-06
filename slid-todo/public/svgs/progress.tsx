@@ -12,6 +12,7 @@ const Progress = ({ className }: ProgressProps) => {
       viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
     >
       <rect width="40" height="40" rx="15" fill="#0F172A" />
       <path

@@ -14,8 +14,13 @@ export const CreateNoteButton = ({ onClick }: CreateNoteButtonProps) => {
           variant="ghost"
           onClick={onClick}
           className="p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full aspect-square w-8 h-8"
+          aria-label="create-note-button"
         >
-          <FilePlus className="h-4 w-4" data-cy="create-note-button" />
+          <FilePlus
+            className="h-4 w-4"
+            data-cy="create-note-button"
+            aria-label="create-note-button-icon"
+          />
         </Button>
       </TooltipTrigger>
       <TooltipContent>노트 작성</TooltipContent>
