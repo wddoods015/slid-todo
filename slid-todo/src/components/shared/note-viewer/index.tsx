@@ -37,6 +37,7 @@ import { Todo } from "@/types/todo";
 import { NoteHeader } from "./note-header";
 import { NoteContent } from "./note-content";
 import { cn } from "@/utils/cn";
+import EmbedContent from "./embed-content";
 
 interface NoteViewerProps {
   isOpen: boolean;
@@ -47,22 +48,36 @@ interface NoteViewerProps {
 
 export const NoteViewer = ({ isOpen, onOpenChange, todo, noteData }: NoteViewerProps) => {
   return (
-    <Sheet open={isOpen} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="right"
-        data-cy="te-sheet"
-        className={cn(
-          "w-full",
-          "sm:w-[95%] md:w-[95%] lg:w-[800px]",
-          "sm:max-w-[800px]",
-          "p-0",
-          "[&_button[type='button']]:hidden",
-        )}
-      >
-        <SheetTitle className="sr-only">{todo.title} 노트</SheetTitle>
-        <NoteHeader todo={todo} noteData={noteData} onClose={() => onOpenChange(false)} />
-        {noteData && <NoteContent noteData={noteData} />}
-      </SheetContent>
-    </Sheet>
+    <>
+      <Sheet open={isOpen} onOpenChange={onOpenChange}>
+        <SheetContent
+          side="left"
+          className={cn(
+            "w-full",
+            "sm:w-[95%] md:w-[95%] lg:w-[800px]",
+            "sm:max-w-[800px]",
+            "p-0",
+            "[&_button[type='button']]:hidden",
+          )}
+        >
+          <EmbedContent url={"www.naver.com"} isVisible={true} />
+        </SheetContent>
+        <SheetContent
+          side="right"
+          data-cy="te-sheet"
+          className={cn(
+            "w-full",
+            "sm:w-[95%] md:w-[95%] lg:w-[800px]",
+            "sm:max-w-[800px]",
+            "p-0",
+            "[&_button[type='button']]:hidden",
+          )}
+        >
+          <SheetTitle className="sr-only">{todo.title} 노트</SheetTitle>
+          <NoteHeader todo={todo} noteData={noteData} onClose={() => onOpenChange(false)} />
+          {noteData && <NoteContent noteData={noteData} />}
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
