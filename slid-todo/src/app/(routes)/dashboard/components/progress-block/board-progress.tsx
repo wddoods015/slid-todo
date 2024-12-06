@@ -5,8 +5,7 @@ import CircleProgress from "./circleProgress";
 import { useProgress } from "@/hooks/goals/use-dashboard-goals";
 
 const MyProgress = () => {
-  const { data, isLoading, error } = useProgress();
-  if (isLoading) return <div>로딩 중...</div>;
+  const { data } = useProgress();
 
   return (
     <div className="bg-[#3B82F6] dark:bg-blue-800 w-full h-[250px] rounded-2xl flex-1 relative">

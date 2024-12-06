@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+  openAnalyzer: true,
+});
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -10,7 +16,7 @@ const nextConfig = {
     esmExternals: "loose",
   },
   output: "standalone",
-  productionBrowserSourceMaps: true, // 소스맵 생성 활성화
+  productionBrowserSourceMaps: true,
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);
