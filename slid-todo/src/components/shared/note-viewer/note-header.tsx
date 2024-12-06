@@ -11,7 +11,6 @@ interface NoteHeaderProps {
 }
 
 export const NoteHeader = ({ todo, noteData, onClose }: NoteHeaderProps) => {
-  console.log(noteData);
   return (
     <header className="border-b p-4 mt-12">
       <button

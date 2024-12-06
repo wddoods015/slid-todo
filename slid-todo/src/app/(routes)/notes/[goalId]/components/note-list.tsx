@@ -9,7 +9,7 @@ interface NoteListProps {
 }
 const NoteList = ({ goalId }: NoteListProps) => {
   const { data, isLoading, isError } = useNoteList(goalId);
-  console.log(data, goalId);
+
   if (!goalId || isError) return <div> 잘못된 접근입니다.</div>;
   if (!data || data.notes.length === 0)
     return (
