@@ -131,7 +131,9 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
 
       <div className="flex items-center gap-4 mb-2 bg-white dark:bg-background rounded-2xl p-0.5 px-2">
         <Progress value={goal.progress} className="w-full h-1.5 rounded-2xl" />
-        <p className="text-sm font-semibold text-foreground">{goal.progress}%</p>
+        <p className="text-sm font-semibold text-foreground" data-cy="progress">
+          {goal.progress}%
+        </p>
       </div>
 
       {todos.length > 0 || doneTodos.length > 0 ? (
