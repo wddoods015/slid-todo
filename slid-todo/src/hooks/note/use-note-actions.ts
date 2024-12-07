@@ -1,6 +1,7 @@
 import { instance } from "@/lib/axios";
 import { Note } from "@/types/note";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export interface CreateNoteRequest {
@@ -18,6 +19,7 @@ interface UpdateNoteRequest {
 
 export const useNoteActions = (note?: Note) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { mutate: createNote } = useMutation({
     mutationFn: async (newNote: CreateNoteRequest) => {
@@ -35,6 +37,7 @@ export const useNoteActions = (note?: Note) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       toast.success("노트가 작성되었습니다.");
+      router.back();
     },
     onError: (error) => {
       console.error("API Error:", error);
@@ -56,6 +59,7 @@ export const useNoteActions = (note?: Note) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       toast.success("노트가 수정되었습니다.");
+      router.back();
     },
     onError: (error) => {
       console.error("API Error:", error);

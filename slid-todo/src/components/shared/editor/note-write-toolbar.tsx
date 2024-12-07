@@ -35,43 +35,43 @@ const NoteWriteToolbar = ({ editor }: ToolBarProps) => {
   };
 
   return (
-    <div className="w-full flex items-center justify-between gap-2 px-[16px] py-[10px] border-[1px] sm:gap-8 text-slate-700 rounded-full border-slate-200">
+    <div className="w-full flex items-center justify-between gap-2 px-[16px] py-[10px] border-[1px] sm:gap-8 text-slate-700 rounded-full border-slate-200 dark:bg-indigo-950">
       <div className="w-1/2 flex items-center justify-between">
         <div className="flex items-center justify-center gap-5 ">
           <Bold
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.chain().focus().toggleBold().run()}
           />
           <Italic
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.chain().focus().toggleItalic().run()}
           />
           <Underline
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.chain().focus().toggleUnderline().run()}
           />
         </div>
         <div className="flex items-center justify-center gap-5">
           <AlignLeft
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.commands.setTextAlign("left")}
           />
           <AlignCenter
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.commands.setTextAlign("center")}
           />
           <AlignRight
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.commands.setTextAlign("right")}
           />
         </div>
         <div className="flex items-center justify-center gap-5">
           <List
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
           />
           <ListOrdered
-            className="hover:cursor-pointer hover:bg-slate-200 rounded-full"
+            className="hover:cursor-pointer hover:bg-slate-200 rounded-full dark:text-white dark:hover:bg-gray-700"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
           />
           {/* <PaintBucket className="hover:cursor-pointer hover:bg-slate-200 rounded-full" /> */}

@@ -12,7 +12,7 @@ export default function NoteCreateLayout({ children }: { children: React.ReactNo
 
   return (
     <SidebarProvider>
-      <div className="w-full h-full bg-[#F1F5F9] rounded-lg">{children}</div>
+      <div className="w-full h-full bg-[#F1F5F9] rounded-lg dark:bg-black">{children}</div>
     </SidebarProvider>
   );
 }
