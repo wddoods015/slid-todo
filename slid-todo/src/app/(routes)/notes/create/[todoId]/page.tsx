@@ -1,5 +1,5 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Loading } from "@/components/shared/loading";
 import { useTodoById } from "@/hooks/todo/use-todos";
 import { CreateNoteRequest, useNoteActions } from "@/hooks/note/use-note-actions";
@@ -15,6 +15,7 @@ import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 import toast from "react-hot-toast";
 
 const NoteCreatePage = () => {
+  const router = useRouter();
   const { todoId } = useParams();
   const [note, setNote] = useState<CreateNoteRequest>({
     todoId: Number(todoId),
@@ -53,6 +54,7 @@ const NoteCreatePage = () => {
       confirmText: "불러오기",
       variant: "info",
       onConfirm: () => {
+        router.back();
         form.reset({
           todoId: Number(todoId),
           title: data.title,
@@ -77,6 +79,7 @@ const NoteCreatePage = () => {
     localStorage.setItem(saveKey, JSON.stringify(preSaveData));
 
     toast.success("임시저장에 성공했습니다.");
+    router.back();
   };
 
   const handleUpdate = () => {
@@ -94,7 +97,7 @@ const NoteCreatePage = () => {
 
   return (
     <FormProvider {...form}>
-      <div className="h-screen bg-white px-36 py-10">
+      <div className="h-screen  px-36 py-10">
         <div className="flex flex-col w-2/3 h-full">
           <div>
             <NoteCreateHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
