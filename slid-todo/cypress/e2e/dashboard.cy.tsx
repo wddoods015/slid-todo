@@ -66,22 +66,47 @@ describe("dashboard 페이지 테스트", () => {
     cy.url().should("include", "/todos");
   });
 
-  // 목표별 할 일 블록 테스트
   it("대시보드에서 목표별 할일 테스트", () => {
     cy.visit("/dashboard");
     cy.url().should("include", "/dashboard");
 
-    // 모든 체크박스를 클릭하여 체크 상태로 만듦
+    // overflow-hidden 영역에서 스크롤을 수동으로 내리기
+    cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
+      // 부모 요소의 scrollTop을 변경하여 수동으로 스크롤 내리기
+      const scrollHeight = $scrollArea[0].scrollHeight; // 전체 스크롤 높이
+      cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 }); // 맨 아래로 스크롤
+    });
+
+    // "더보기" 버튼이 보일 때까지 기다리기
+    cy.contains("button", "더보기", { timeout: 10000 }).click(); // 버튼 클릭
+
+    // 클릭 후 체크박스 개수 확인
+    cy.get('button[role="checkbox"]').then(($checkboxes) => {
+      const initialCount = $checkboxes.length;
+
+      // 스크롤을 내려 추가된 체크박스 로드
+      cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
+        const scrollHeight = $scrollArea[0].scrollHeight;
+        cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 }); // 다시 스크롤 내리기
+      });
+
+      // "더보기" 버튼 클릭 후 체크박스 개수 확인
+      cy.get('button[role="checkbox"]', { timeout: 10000 }).should(
+        "have.length.greaterThan",
+        initialCount,
+      );
+    });
+
+    // "더보기" 버튼 클릭 후 모든 체크박스가 체크 가능한지 확인
     cy.get('button[role="checkbox"]').each(($checkbox) => {
-      // 각 체크박스가 체크되지 않은 경우에만 클릭하여 체크 상태로 만듦
       cy.wrap($checkbox).then(($btn) => {
         if ($btn.attr("aria-checked") !== "true") {
-          cy.wrap($btn).click(); // aria-checked가 "false"인 경우 클릭
+          cy.wrap($btn).click();
         }
       });
     });
 
-    // 모든 체크박스가 체크되었을 때, progress의 값이 100%인지 확인
+    // 모든 체크박스 체크 후 progress 값이 100%인지 확인
     cy.get('[data-cy="progress"]').should("include.text", "100");
   });
 });
