@@ -61,12 +61,14 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
     fetchNextPage: fetchTodoNextPage,
     hasNextPage: hasTodoNextPage,
     isFetchingNextPage: isFetchingTodoNextPage,
+    status: todoStatus,
   } = useGoalTodosInfinite(goal.id, false, 4);
   const {
     data: doneData,
     fetchNextPage: fetchDoneNextPage,
     hasNextPage: hasDoneNextPage,
     isFetchingNextPage: isFetchingDoneNextPage,
+    status: doneStatus,
   } = useGoalTodosInfinite(goal.id, true, 4);
 
   const todos = todoData?.pages.flatMap((page) => page.todos) || [];
@@ -106,6 +108,9 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
       },
     });
   };
+  if (todoStatus === "pending" || doneStatus === "pending") {
+    return null;
+  }
 
   return (
     <div className="bg-blue-50 dark:bg-slate-200/10 rounded-3xl p-4 shadow-md">

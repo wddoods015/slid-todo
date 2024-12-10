@@ -9,6 +9,7 @@ interface TodoListProps {
 }
 
 export const TodoList = ({ todos, observerRef, isLoading }: TodoListProps) => {
+  if (!todos) return null;
   if (todos.length === 0) {
     return (
       <div className="flex-1 relative min-h-[500px] ">

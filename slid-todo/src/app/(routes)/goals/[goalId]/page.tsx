@@ -6,17 +6,14 @@ import { ViewNotesButton } from "./components/view-notes-button";
 import { Loading } from "@/components/shared/loading";
 import dynamic from "next/dynamic";
 
-const GoalListContent = dynamic(() => import("./components/goal-list-content"), {
-  loading: () => <Loading />,
-});
+const GoalListContent = dynamic(() => import("./components/goal-list-content"));
 
 const GoalPage = () => {
   const { goalId } = useParams();
   const { data: goal, isLoading: goalLoading, error: goalError } = useGoal(Number(goalId));
 
-  if (goalLoading) return <Loading />;
+  if (goalLoading || !goal) return <Loading />;
   if (goalError) return <div>에러가 발생했습니다.</div>;
-  if (!goal) return <div>목표를 찾을 수 없습니다.</div>;
 
   return (
     <div className="container px-4 py-6">

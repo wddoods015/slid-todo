@@ -16,7 +16,7 @@ const GoalListContent = () => {
   const { ref: doneRef, inView: doneInView } = useInView();
   const { onOpen: onOpenFormModal } = useFormModal();
   const { createTodo } = useTodoActions();
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGoalTodosInfinite(
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useGoalTodosInfinite(
     Number(goalId),
     false,
   );
@@ -26,6 +26,7 @@ const GoalListContent = () => {
     fetchNextPage: fetchDoneNextPage,
     hasNextPage: hasDoneNextPage,
     isFetchingNextPage: isFetchingDoneNextPage,
+    status: doneStatus,
   } = useGoalTodosInfinite(Number(goalId), true);
 
   useEffect(() => {
@@ -42,7 +43,9 @@ const GoalListContent = () => {
 
   const todos = data?.pages.flatMap((page) => page.todos) || [];
   const doneTodos = doneData?.pages.flatMap((page) => page.todos) || [];
-
+  if (status === "pending" || doneStatus === "pending") {
+    return null;
+  }
   const handleOpenFormModal = () => {
     onOpenFormModal({
       type: "todo",
