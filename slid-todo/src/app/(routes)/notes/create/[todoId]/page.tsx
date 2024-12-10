@@ -9,10 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import NoteCreateHeader from "./components/note-create-header";
 import NoteCreateInfo from "./components/note-create-info";
-import NoteCreateForm from "./components/note-create-form";
 import { useEffect, useState } from "react";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
+
+const NoteCreateForm = dynamic(() => import("./components/note-create-form"), {
+  loading: () => <Loading />,
+  ssr: false,
+});
 
 const NoteCreatePage = () => {
   const router = useRouter();

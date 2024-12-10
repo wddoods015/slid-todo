@@ -17,17 +17,10 @@ const MyProgress = () => {
           <div className="w-[50%] flex flex-col gap-2">
             <span className="text-white text-lg font-semibold mt-4 ">내 진행 상황</span>
             <h1 className="text-white text-4xl flex items-center">
-              {data ? (
-                <>
-                  {data}
-                  <span className="text-base flex items-center h-full ml-1">%</span>
-                </>
-              ) : (
-                <>
-                  <span className="text-white">0</span>
-                  <span className="text-base flex items-center h-full ml-1">%</span>
-                </>
-              )}
+              <>
+                <span className="text-white">{data || 0}</span>
+                <span className="text-base flex items-center h-full ml-1">%</span>
+              </>
             </h1>
           </div>
           <div className="flex-1 flex justify-end">
