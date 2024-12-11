@@ -4,7 +4,6 @@ import { Loading } from "@/components/shared/loading";
 import { useNoteWithTodo } from "@/hooks/note/use-note";
 import NoteEditHeader from "./components/note-edit-header";
 import NoteEditInfo from "./components/note-edit-info";
-import NoteEditForm from "./components/note-edit-form";
 import { useNoteActions } from "@/hooks/note/use-note-actions";
 import { useEffect, useState } from "react";
 import { useNoteEditStore } from "@/stores/use-note-store";
@@ -13,6 +12,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { NoteEditFormValues, NoteEditSchema } from "./components/utils/edit-validation";
 import toast from "react-hot-toast";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
+import dynamic from "next/dynamic";
+
+const NoteEditForm = dynamic(() => import("./components/note-edit-form"), {
+  loading: () => <Loading />,
+  ssr: false,
+});
 
 const NoteEditPage = () => {
   const router = useRouter();

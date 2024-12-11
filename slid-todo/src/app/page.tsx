@@ -13,7 +13,7 @@ export default function Home() {
           className="hover:scale-105 transition-transform duration-300"
         />
         <div className="mt-10 h-[0px]">
-          <Loading fullScreen={false} size={200} />
+          <Loading fullScreen={false} size="md" />
         </div>
       </div>
     </main>

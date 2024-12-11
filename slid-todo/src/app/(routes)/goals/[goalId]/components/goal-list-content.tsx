@@ -10,26 +10,23 @@ import { Loading } from "@/components/shared/loading";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
-export const GoalListContent = () => {
+const GoalListContent = () => {
   const { goalId } = useParams();
   const { ref: todoRef, inView: todoInView } = useInView();
   const { ref: doneRef, inView: doneInView } = useInView();
-  const { onOpen: onOpenFormModal } = useFormModal(); // 추가
-  const { createTodo } = useTodoActions(); // 추가
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading: isTodoLoading, // isLoading 추가
-  } = useGoalTodosInfinite(Number(goalId), false);
+  const { onOpen: onOpenFormModal } = useFormModal();
+  const { createTodo } = useTodoActions();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useGoalTodosInfinite(
+    Number(goalId),
+    false,
+  );
 
   const {
     data: doneData,
     fetchNextPage: fetchDoneNextPage,
     hasNextPage: hasDoneNextPage,
     isFetchingNextPage: isFetchingDoneNextPage,
-    isLoading: isDoneLoading, // isLoading 추가
+    status: doneStatus,
   } = useGoalTodosInfinite(Number(goalId), true);
 
   useEffect(() => {
@@ -44,17 +41,12 @@ export const GoalListContent = () => {
     }
   }, [doneInView, hasDoneNextPage, fetchDoneNextPage]);
 
-  const isLoading = isTodoLoading || isDoneLoading;
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
   const todos = data?.pages.flatMap((page) => page.todos) || [];
   const doneTodos = doneData?.pages.flatMap((page) => page.todos) || [];
-
+  if (status === "pending" || doneStatus === "pending") {
+    return null;
+  }
   const handleOpenFormModal = () => {
-    // 함수 추가
     onOpenFormModal({
       type: "todo",
       mode: "create",
@@ -91,3 +83,5 @@ export const GoalListContent = () => {
     </div>
   );
 };
+
+export default GoalListContent;

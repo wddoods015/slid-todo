@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
 import { ChevronDown } from "lucide-react";
+import EmptyState from "@/components/shared/empty-state";
 interface Goal {
   id: number;
   title: string;
@@ -21,32 +22,22 @@ interface Goal {
 }
 
 const GoalToDoContainer = () => {
-  const {
-    data,
-    isLoading: isGoalLoading,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useGoalListInfinite();
-  const { ref: goalRef, inView: goalInView } = useInView(); // 목표 스크롤 감지
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGoalListInfinite();
+  const { ref: goalRef, inView: goalInView } = useInView();
 
   useEffect(() => {
     if (goalInView && hasNextPage) {
-      fetchNextPage(); // 스크롤 감지 시 다음 목표 로드
+      fetchNextPage();
     }
   }, [goalInView, hasNextPage, fetchNextPage]);
 
-  if (isGoalLoading) {
-    return <div>Loading...</div>; // 목표 데이터 로딩 중
-  }
-
   const goals = data?.pages.flatMap((page) => page.goals) || [];
 
-  // 대시보드에서 목표가 없을 때, 처리
+  // ScrollArea 밖으로 EmptyState 이동
   if (goals.length === 0) {
     return (
-      <div className="w-full h-screen flex justify-center items-center text-muted-foreground">
-        등록한 목표가 없어요
+      <div className="w-full h-[calc(100vh-340px)] flex items-center justify-center">
+        <EmptyState message="등록한 목표가 없어요" />
       </div>
     );
   }
@@ -57,7 +48,6 @@ const GoalToDoContainer = () => {
         {goals.map((goal) => (
           <TodoSection key={goal.id} goal={goal} />
         ))}
-        {/* 목표 리스트 무한 스크롤 트리거 요소 */}
         {hasNextPage && <div ref={goalRef} className="h-10" />}
         {isFetchingNextPage && <p>할 일 더보기...</p>}
       </div>
@@ -71,12 +61,14 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
     fetchNextPage: fetchTodoNextPage,
     hasNextPage: hasTodoNextPage,
     isFetchingNextPage: isFetchingTodoNextPage,
+    status: todoStatus,
   } = useGoalTodosInfinite(goal.id, false, 4);
   const {
     data: doneData,
     fetchNextPage: fetchDoneNextPage,
     hasNextPage: hasDoneNextPage,
     isFetchingNextPage: isFetchingDoneNextPage,
+    status: doneStatus,
   } = useGoalTodosInfinite(goal.id, true, 4);
 
   const todos = todoData?.pages.flatMap((page) => page.todos) || [];
@@ -116,6 +108,9 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
       },
     });
   };
+  if (todoStatus === "pending" || doneStatus === "pending") {
+    return null;
+  }
 
   return (
     <div className="bg-blue-50 dark:bg-slate-200/10 rounded-3xl p-4 shadow-md">
@@ -155,8 +150,8 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
           </div>
         </div>
       ) : (
-        <div className="w-full h-[180px] text-gray-400 dark:text-muted-foreground flex items-center justify-center">
-          할 일 없음
+        <div className="w-full h-[180px] flex items-center justify-center">
+          <EmptyState message="아직 등록된 할 일이 없어요" />
         </div>
       )}
 
