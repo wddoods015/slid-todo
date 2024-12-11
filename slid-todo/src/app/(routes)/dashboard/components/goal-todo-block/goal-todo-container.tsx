@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useFormModal } from "@/stores/use-form-modal-store";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 interface Goal {
   id: number;
   title: string;
@@ -45,7 +46,10 @@ const GoalToDoContainer = () => {
   // 대시보드에서 목표가 없을 때, 처리
   if (goals.length === 0) {
     return (
-      <div className="w-full h-screen flex justify-center items-center text-muted-foreground">
+      <div
+        className="w-full h-screen flex justify-center items-center text-muted-foreground"
+        data-cy="no-goals-message"
+      >
         등록한 목표가 없어요
       </div>
     );
@@ -120,7 +124,9 @@ const TodoSection = ({ goal }: { goal: Goal }) => {
   return (
     <div className="bg-blue-50 dark:bg-slate-200/10 rounded-3xl p-4 shadow-md">
       <div className="flex justify-between p-2">
-        <h1 className="text-lg font-semibold mb-2 text-foreground">{goal.title}</h1>
+        <Link href={`/goals/${goal.id}`} key={goal.id}>
+          <h1 className="text-lg font-semibold mb-2 text-foreground">{goal.title}</h1>
+        </Link>
         <Button
           className="bg-transparent text-blue-500 dark:text-slate-400 text-sm hover:bg-transparent hover:text-blue-600 dark:hover:text-slate-200 p-0 transition-colors"
           onClick={handleOpenFormModal}
