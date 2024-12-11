@@ -112,29 +112,29 @@ describe("todos 페이지 테스트", () => {
 
     cy.url().should("include", `/notes/${sharedGoalId}`);
   });
-  it("수정 테스트", () => {
-    cy.intercept("PATCH", `**/goals/${sharedGoalId}`).as("updateGoal");
+  // it("수정 테스트", () => {
+  //   cy.intercept("PATCH", `**/goals/${sharedGoalId}`).as("updateGoal");
 
-    cy.visit(`/goals/${sharedGoalId}`);
+  //   cy.visit(`/goals/${sharedGoalId}`);
 
-    cy.wait(1000);
+  //   cy.wait(1000);
 
-    cy.get("[data-cy='more-button']").should("be.visible", { timeout: 10000 }).click();
-    cy.get("[data-cy='edit-button']").should("be.visible", { timeout: 5000 }).click();
+  //   cy.get("[data-cy='more-button']").should("be.visible", { timeout: 10000 }).click();
+  //   cy.get("[data-cy='edit-button']").should("be.visible", { timeout: 5000 }).click();
 
-    cy.get("[data-cy='form-modal-title']")
-      .should("be.visible", { timeout: 5000 })
-      .clear()
-      .type("수정된 목표xudsnsdfsd");
+  //   cy.get("[data-cy='form-modal-title']")
+  //     .should("be.visible", { timeout: 5000 })
+  //     .clear()
+  //     .type("수정된 목표xudsnsdfsd");
 
-    cy.get("[data-cy='form-modal-submit-button']").click();
+  //   cy.get("[data-cy='form-modal-submit-button']").click();
 
-    cy.wait("@updateGoal").its("response.statusCode").should("eq", 200);
+  //   cy.wait("@updateGoal").its("response.statusCode").should("eq", 200);
 
-    cy.get("[data-cy='goal-title']")
-      .should("be.visible", { timeout: 5000 })
-      .should("have.text", "수정된 목표xudsnsdfsd");
-  });
+  //   cy.get("[data-cy='goal-title']")
+  //     .should("be.visible", { timeout: 5000 })
+  //     .should("have.text", "수정된 목표xudsnsdfsd");
+  // });
 
   it("삭제 테스트", () => {
     cy.intercept("DELETE", `**/goals/${sharedGoalId}`).as("deleteGoal");

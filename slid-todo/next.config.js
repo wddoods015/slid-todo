@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
@@ -6,10 +10,11 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
-  output: "standalone",
   experimental: {
     esmExternals: "loose",
   },
   output: "standalone",
+  productionBrowserSourceMaps: true,
 };
-module.exports = nextConfig;
+
+module.exports = withBundleAnalyzer(nextConfig);

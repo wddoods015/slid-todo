@@ -5,9 +5,17 @@ import { instance } from "@/lib/axios";
 import toast from "react-hot-toast";
 import { ActionButtons } from "@/components/shared/action-buttons";
 import { MoreMenu } from "@/components/shared/more-menu";
-import { NoteViewer } from "@/components/shared/note-viewer";
 import { useTodoActions } from "@/hooks/todo/use-todo-actions";
 import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const NoteViewer = dynamic(
+  () => import("@/components/shared/note-viewer").then((mod) => mod.NoteViewer),
+  {
+    ssr: false, // 모달이므로 SSR 불필요함
+  },
+);
+
 interface TodoActionsProps {
   todo: Todo;
 }
@@ -67,13 +75,15 @@ const TodoActions = ({ todo }: TodoActionsProps) => {
           }}
         />
       </div>
-      <NoteViewer
-        data-cy="note-viewer"
-        isOpen={isNoteOpen}
-        onOpenChange={setIsNoteOpen}
-        todo={todo}
-        noteData={noteData}
-      />
+      {isNoteOpen && (
+        <NoteViewer
+          data-cy="note-viewer"
+          isOpen={isNoteOpen}
+          onOpenChange={setIsNoteOpen}
+          todo={todo}
+          noteData={noteData}
+        />
+      )}
     </>
   );
 };
