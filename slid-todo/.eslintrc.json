@@ -5,7 +5,9 @@
     // ES2021 문법 사용 가능
     "es2021": true,
     // Node.js 전역 변수 사용 가능
-    "node": true
+    "node": true,
+    // jest 문법
+    "jest": true
   },
   "extends": [
     "next/core-web-vitals",
