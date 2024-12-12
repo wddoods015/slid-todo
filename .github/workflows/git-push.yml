@@ -22,7 +22,7 @@ jobs:
         with:
           source-directory: "output"
           destination-github-username: "catmaker"
-          destination-repository-name: "code-it-2"
+          destination-repository-name: "slid-todo"
           user-email: ${{ secrets.JS_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
@@ -46,7 +46,7 @@ jobs:
         with:
           source-directory: "output"
           destination-github-username: "s-ggul"
-          destination-repository-name: "code-it-2"
+          destination-repository-name: "slid-todo"
           user-email: ${{ secrets.SH_ACCOUNT_EMAIL }}
           commit-message: ${{ github.event.commits[0].message }}
           target-branch: main
