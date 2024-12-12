@@ -1,6 +1,5 @@
 import { instance } from "@/lib/axios";
 import { Note, NotesResponse } from "@/types/note";
-import { Todo } from "@/types/todo";
 import { useQuery } from "@tanstack/react-query";
 import { useTodosOnce } from "../todo/use-todos";
 
