@@ -1,5 +1,5 @@
 "use client";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Loading } from "@/components/shared/loading";
 import { useTodoById } from "@/hooks/todo/use-todos";
 import { CreateNoteRequest, useNoteActions } from "@/hooks/note/use-note-actions";
@@ -22,6 +22,8 @@ const NoteCreateForm = dynamic(() => import("./components/note-create-form"), {
 const NoteCreatePage = () => {
   const router = useRouter();
   const { todoId } = useParams();
+  const params = useSearchParams();
+
   const [note, setNote] = useState<CreateNoteRequest>({
     todoId: Number(todoId),
     title: "",
@@ -29,7 +31,7 @@ const NoteCreatePage = () => {
     linkUrl: "",
   });
   const saveKey = `${todoId}-create-note`;
-  const { todo, isLoading, isError } = useTodoById(Number(todoId));
+  const { todo, isLoading, isError } = useTodoById(Number(todoId), Number(params.get("goalId")));
   const { createNote } = useNoteActions();
   const { onOpen: openConfirm } = useConfirmModal();
 
