@@ -6,7 +6,7 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import React from "react";
+import React, { useEffect } from "react";
 import { AppSidebarTrigger } from "./components/app-sidebar-trigger";
 import { AppSidebarFooter } from "./components/app-sidebar-footer";
 import { AppSidebarHeader } from "./components/app-sidebar-header";
@@ -16,17 +16,22 @@ import AppSidebarDashBoard from "./components/app-sidebar-dashboard";
 import AppSidebarGoal from "./components/app-sidebar-goal";
 
 const AppSidebar = () => {
-  const { open, setOpen } = useSidebar();
+  const { open, openMobile, setOpen, setOpenMobile } = useSidebar();
+
+  useEffect(() => {
+    setOpen(true);
+    setOpenMobile(true);
+  }, []);
 
   return (
     <>
       {/* open이 true일 때 백그라운드 덮기 */}
       {/* 사이드바는 z-index로 백그라운드 위에 위치하도록 설정 */}
-      <Sidebar className="bg-white">
+      <Sidebar className="bg-white" role="sidebar">
         <SidebarHeader>
           <AppSidebarHeader />
         </SidebarHeader>
-        <SidebarContent className="w-full h-1/2">
+        <SidebarContent>
           <AppSidebarUserInfo />
           <Separator className="border-[1px]" />
           <AppSidebarDashBoard />
@@ -37,14 +42,7 @@ const AppSidebar = () => {
           <AppSidebarFooter />
         </SidebarFooter>
       </Sidebar>
-      {/* {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black opacity-50 z-20 lg:hidden"
-        />
-      )} */}
-
-      {!open && <AppSidebarTrigger />}
+      {!open && !openMobile && <AppSidebarTrigger />}
     </>
   );
 };
