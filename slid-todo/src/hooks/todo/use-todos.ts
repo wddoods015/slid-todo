@@ -28,9 +28,10 @@ export const useTodosOnce = () => {
       const size = 1200;
       const response = await instance.get<TodosResponse>("/todos", {
         params: {
-          size,
+          size: Number.MAX_SAFE_INTEGER,
         },
       });
+
       return response.data;
     },
   });

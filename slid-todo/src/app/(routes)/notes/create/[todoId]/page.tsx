@@ -34,7 +34,7 @@ const NoteCreatePage = () => {
   const { todo, isLoading, isError } = useTodoById(Number(todoId), Number(params.get("goalId")));
   const { createNote } = useNoteActions();
   const { onOpen: openConfirm } = useConfirmModal();
-
+  console.log(todo);
   const form = useForm<NoteCreateFormValues>({
     resolver: zodResolver(NoteCreateSchema),
     defaultValues: {
@@ -105,8 +105,8 @@ const NoteCreatePage = () => {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <FormProvider {...form}>
-        <div className="h-screen  px-36 py-10">
-          <div className="flex flex-col w-2/3 h-full">
+        <div className="px-4 md:pl-16 py-6">
+          <div className="flex flex-col w-full md:w-2/3 h-full">
             <div>
               <NoteCreateHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
               <NoteCreateInfo todo={todo} />
