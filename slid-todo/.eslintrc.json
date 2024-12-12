@@ -5,7 +5,9 @@
     // ES2021 문법 사용 가능
     "es2021": true,
     // Node.js 전역 변수 사용 가능
-    "node": true
+    "node": true,
+    // jest 문법
+    "jest": true
   },
   "extends": [
     "next/core-web-vitals",
@@ -14,6 +16,7 @@
     // Prettier와 충돌하는 ESLint 규칙 비활성화
     "prettier"
   ],
+
   // TypeScript 파서 사용
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -29,7 +32,9 @@
   "rules": {
     "prettier/prettier": "error",
     "@typescript-eslint/no-unused-vars": "warn",
-    "@typescript-eslint/no-explicit-any": "warn"
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-var-requires": "off", // require 허용
+    "@typescript-eslint/no-require-imports": "off" //
   },
   "settings": {
     "react": {

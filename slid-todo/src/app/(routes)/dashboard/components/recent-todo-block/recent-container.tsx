@@ -1,17 +1,9 @@
 import { useRecentTodos } from "@/hooks/todo/use-todos";
 import TodoItem from "@/components/shared/todo-list/todo-item";
+import EmptyState from "@/components/shared/empty-state";
 
 const RecentContainer = () => {
-  const { data, error, isLoading, isError } = useRecentTodos();
-
-  // 로딩 상태 처리
-  if (isLoading) {
-    return (
-      <div className="text-gray-400 dark:text-slate-400 flex items-center justify-center">
-        Loading...
-      </div>
-    );
-  }
+  const { data, error, isError } = useRecentTodos();
 
   // 에러 상태 처리
   if (isError && error instanceof Error) {
@@ -28,9 +20,7 @@ const RecentContainer = () => {
       {data?.todos && data.todos.length > 0 ? (
         data.todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-slate-400 transition-colors">
-          최근에 등록한 할 일이 없어요
-        </div>
+        <EmptyState message="최근에 등록한 할 일이 없어요" />
       )}
     </div>
   );

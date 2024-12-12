@@ -1,7 +1,6 @@
 import { Note } from "@/types/note";
 import Link from "next/link";
 import { ensureHttps } from "@/utils/url";
-import NoteWriteEditor from "../editor/note-write-editor";
 import NoteViewEditor from "../editor/note-view-editor";
 interface NoteContentProps {
   noteData: Note;

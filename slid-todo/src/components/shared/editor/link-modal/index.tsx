@@ -26,9 +26,13 @@ const LinkModal = ({ onSubmit }: LinkModalProps) => {
     <>
       <LinkModalHeader />
       <div className="p-4">
-        <div className="text-base text-slate-800">링크</div>
+        <div className="text-base text-slate-800 dark:text-white">링크</div>
         <div>
-          <Input ref={inputRef} className="bg-slate-50" placeholder="링크를 기입해주세요." />
+          <Input
+            ref={inputRef}
+            className="bg-slate-50 dark:border-none dark:bg-gray-800 dark:text-slate-200"
+            placeholder="링크를 기입해주세요."
+          />
         </div>
       </div>
       <div className="p-4">

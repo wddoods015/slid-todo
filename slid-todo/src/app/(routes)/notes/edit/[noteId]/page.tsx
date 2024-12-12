@@ -1,10 +1,9 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Loading } from "@/components/shared/loading";
 import { useNoteWithTodo } from "@/hooks/note/use-note";
 import NoteEditHeader from "./components/note-edit-header";
 import NoteEditInfo from "./components/note-edit-info";
-import NoteEditForm from "./components/note-edit-form";
 import { useNoteActions } from "@/hooks/note/use-note-actions";
 import { useEffect, useState } from "react";
 import { useNoteEditStore } from "@/stores/use-note-store";
@@ -13,8 +12,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { NoteEditFormValues, NoteEditSchema } from "./components/utils/edit-validation";
 import toast from "react-hot-toast";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
+import dynamic from "next/dynamic";
+
+const NoteEditForm = dynamic(() => import("./components/note-edit-form"), {
+  loading: () => <Loading />,
+  ssr: false,
+});
 
 const NoteEditPage = () => {
+  const router = useRouter();
   const { noteId } = useParams();
   const [preSave, setPreSave] = useState({
     title: "",
@@ -86,6 +92,7 @@ const NoteEditPage = () => {
     localStorage.setItem(saveKey, JSON.stringify(preSaveData));
 
     toast.success("임시저장에 성공했습니다.");
+    router.back();
   };
 
   const handleUpdate = () => {
@@ -105,8 +112,8 @@ const NoteEditPage = () => {
 
   return (
     <FormProvider {...form}>
-      <div className="h-screen bg-white px-36 py-10">
-        <div className="flex flex-col w-2/3 h-full">
+      <div className="px-4 md:pl-16 py-6">
+        <div className="flex flex-col w-full md:w-2/3 h-full">
           <div>
             <NoteEditHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
             <NoteEditInfo todo={todo} />

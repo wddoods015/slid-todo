@@ -15,8 +15,9 @@ const NoteCard = ({ note, onClick }: NoteCardProps) => {
 
   return (
     <div
+      role="note-card"
       onClick={onClick}
-      className="grid gap-2.5 grid-cols-1 bg-white p-[24px] border-[1px] border-slate-100 rounded-xl cursor-pointer transform transition-transform duration-200 hover:scale-105 hover:bg-slate-50"
+      className="grid gap-2.5 grid-cols-1 bg-white p-[24px] border-[1px] border-slate-100 rounded-xl cursor-pointer transform transition-transform duration-200 hover:scale-[1.01] hover:bg-slate-50 dark:bg-gray-900 dark:border-gray-950"
     >
       <div className="flex justify-between">
         <NoteList />
@@ -31,11 +32,11 @@ const NoteCard = ({ note, onClick }: NoteCardProps) => {
           }}
         />
       </div>
-      <div className="text-slate-800 text-lg">{note.title}</div>
+      <div className="text-slate-800 text-lg dark:text-white">{note.title}</div>
       <Separator className="border-[1px]" />
       <div className="flex text-xs text-slate-700 items-center">
         <TodoBadge />
-        <div className=" ">{note.todo.title}</div>
+        <div className="dark:text-slate-300">{note.todo.title}</div>
       </div>
     </div>
   );

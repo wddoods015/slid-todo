@@ -11,15 +11,16 @@ export const LinkButton = ({ url }: LinkButtonProps) => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button
-          variant="ghost"
-          className="p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full aspect-square w-8 h-8"
-          title={url}
+        <a
+          href={ensureHttps(url)}
+          data-cy="link-button"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full w-8 h-8"
+          aria-label="Open external link"
         >
-          <a href={ensureHttps(url)} data-cy="link-button" target="_blank">
-            <LinkIcon className="text-blue-400" />
-          </a>
-        </Button>
+          <LinkIcon className="text-blue-400 w-4 h-4" aria-hidden="true" />
+        </a>
       </TooltipTrigger>
       <TooltipContent>링크 열기</TooltipContent>
     </Tooltip>

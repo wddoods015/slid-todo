@@ -16,6 +16,7 @@ export const FileButton = ({ url }: FileButtonProps) => {
           variant="ghost"
           className="p-1 hover:bg-gray-100 dark:hover:bg-slate-600 rounded-full aspect-square w-8 h-8"
           title={url}
+          aria-label="file-button"
         >
           <a
             href={ensureHttps(url)}
@@ -25,7 +26,7 @@ export const FileButton = ({ url }: FileButtonProps) => {
             className="w-4 h-4"
             data-cy="file-button"
           >
-            <FileText className="text-blue-400" />
+            <FileText className="text-blue-400" aria-label="file-button-icon" />
           </a>
         </Button>
       </TooltipTrigger>
