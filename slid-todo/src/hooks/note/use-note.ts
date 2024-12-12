@@ -24,13 +24,24 @@ export const useNoteWithTodo = (noteId: number) => {
     queryFn: () => instance.get<Note>(`/notes/${noteId}`).then((res) => res.data),
   });
 
-  const { data, isLoading: isLoadingTodo, isError: isErrorTodo } = useTodosOnce();
-  const todo = data?.todos?.find((item) => item.noteId === noteId);
+  // note 객체 안에 있는 todo 정보를 사용
+  const todo = note
+    ? {
+        ...note.todo,
+        goal: note.goal,
+        userId: note.userId,
+        teamId: note.teamId,
+        updatedAt: note.updatedAt,
+        createdAt: note.createdAt,
+      }
+    : null;
 
-  const isLoading = isLoadingNote || isLoadingTodo;
-  const isError = isErrorNote || isErrorTodo;
-
-  return { note, todo, isLoading, isError };
+  return {
+    note,
+    todo,
+    isLoading: isLoadingNote,
+    isError: isErrorNote,
+  };
 };
 
 export const useNoteList = (goalId: number) => {

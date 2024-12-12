@@ -10,7 +10,7 @@ const NoteCreateHeader = ({ onClickPreSaveBtn, onClickUpdateBtn }: NoteCreateHea
     <div className="flex justify-between items-center">
       <div className="text-lg text-slate-900 dark:text-white">노트 작성</div>
 
-      <div className="flex justify-between w-[20%]">
+      <div className="flex gap-2">
         <Button
           className="bg-slate-100 text-blue-500 hover:bg-slate-200 dark:bg-slate-500 dark:text-white dark:hover:bg-slate-600"
           onClick={onClickPreSaveBtn}

@@ -32,7 +32,7 @@ const NoteCreatePage = () => {
   const { todo, isLoading, isError } = useTodoById(Number(todoId));
   const { createNote } = useNoteActions();
   const { onOpen: openConfirm } = useConfirmModal();
-
+  console.log(todo);
   const form = useForm<NoteCreateFormValues>({
     resolver: zodResolver(NoteCreateSchema),
     defaultValues: {
