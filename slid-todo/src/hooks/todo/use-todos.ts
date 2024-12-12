@@ -24,12 +24,12 @@ export const useTodosOnce = () => {
   return useQuery<TodosResponse>({
     queryKey: ["todos", "once"],
     queryFn: async () => {
-      const size = 40;
       const response = await instance.get<TodosResponse>("/todos", {
         params: {
-          size,
+          size: Number.MAX_SAFE_INTEGER,
         },
       });
+
       return response.data;
     },
   });
