@@ -12,8 +12,8 @@ interface NoteEditFormProps {
 
 const NoteEditForm = ({ form }: NoteEditFormProps) => {
   return (
-    <form className="">
-      <div className="">
+    <form>
+      <div>
         <Separator />
         <FormField
           control={form.control}
@@ -34,7 +34,7 @@ const NoteEditForm = ({ form }: NoteEditFormProps) => {
                 </FormControl>
               </FormItem>
               <Separator />
-              <FormMessage className="pl-3 py-2" />
+              <FormMessage className="py-2" />
             </>
           )}
         />

@@ -84,7 +84,7 @@ const NoteWriteToolbar = ({ editor }: ToolBarProps) => {
           </div>
         </div>
         <div
-          className="flex items-center bg-slate-200 hover:bg-slate-300 rounded-full p-1"
+          className="flex items-center bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 rounded-full p-1"
           onClick={(event) => onClickLinkBtn(event)}
         >
           <Link className="w-4 h-4 hover:cursor-pointer hover:text-blue-500 rounded-full dark:text-white dark:hover:text-blue-500" />

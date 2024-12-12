@@ -102,8 +102,8 @@ const NoteCreatePage = () => {
 
   return (
     <FormProvider {...form}>
-      <div className="h-screen  px-36 py-10">
-        <div className="flex flex-col w-2/3 h-full">
+      <div className="px-4 md:pl-16 py-6">
+        <div className="flex flex-col w-full md:w-2/3 h-full">
           <div>
             <NoteCreateHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
             <NoteCreateInfo todo={todo} />
