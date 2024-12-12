@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import NoteCreateHeader from "./components/note-create-header";
 import NoteCreateInfo from "./components/note-create-info";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useConfirmModal } from "@/stores/use-confirm-modal-store";
 import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
@@ -103,17 +103,19 @@ const NoteCreatePage = () => {
   if (isError) return <div>에러가 발생했습니다.</div>;
 
   return (
-    <FormProvider {...form}>
-      <div className="h-screen  px-36 py-10">
-        <div className="flex flex-col w-2/3 h-full">
-          <div>
-            <NoteCreateHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
-            <NoteCreateInfo todo={todo} />
-            <NoteCreateForm form={form} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <FormProvider {...form}>
+        <div className="h-screen  px-36 py-10">
+          <div className="flex flex-col w-2/3 h-full">
+            <div>
+              <NoteCreateHeader onClickUpdateBtn={handleUpdate} onClickPreSaveBtn={handlePreSave} />
+              <NoteCreateInfo todo={todo} />
+              <NoteCreateForm form={form} />
+            </div>
           </div>
         </div>
-      </div>
-    </FormProvider>
+      </FormProvider>
+    </Suspense>
   );
 };
 
