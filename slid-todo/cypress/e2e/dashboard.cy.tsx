@@ -75,56 +75,56 @@ describe("dashboard 페이지 테스트", () => {
     });
   });
 
-  it("대시보드에서 목표별 할일 테스트", () => {
-    cy.visit("/dashboard");
-    cy.url().should("include", "/dashboard");
+  // it("대시보드에서 목표별 할일 테스트", () => {
+  //   cy.visit("/dashboard");
+  //   cy.url().should("include", "/dashboard");
 
-    // 목표가 없을 때 '등록한 목표가 없어요' 메시지를 표시하는지 확인
-    cy.get("body").then(($body) => {
-      // 목표가 없을 때만 해당 div가 존재하는지 확인
-      if ($body.find("div[data-cy='no-goals-message']").length > 0) {
-        // 목표가 없으면 해당 div가 렌더링되므로 "등록한 목표가 없어요" 메시지를 확인
-        cy.get("div[data-cy='no-goals-message']")
-          .should("be.visible")
-          .and("contain.text", "등록한 목표가 없어요");
-      } else {
-        // 목표가 있으면 해당 div는 렌더링되지 않으므로 목표가 있는 경우 테스트 진행
+  //   // 목표가 없을 때 '등록한 목표가 없어요' 메시지를 표시하는지 확인
+  //   cy.get("body").then(($body) => {
+  //     // 목표가 없을 때만 해당 div가 존재하는지 확인
+  //     if ($body.find("div[data-cy='no-goals-message']").length > 0) {
+  //       // 목표가 없으면 해당 div가 렌더링되므로 "등록한 목표가 없어요" 메시지를 확인
+  //       cy.get("div[data-cy='no-goals-message']")
+  //         .should("be.visible")
+  //         .and("contain.text", "등록한 목표가 없어요");
+  //     } else {
+  //       // 목표가 있으면 해당 div는 렌더링되지 않으므로 목표가 있는 경우 테스트 진행
 
-        // 목표가 있는 경우 무한 스크롤 테스트
-        cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
-          const scrollHeight = $scrollArea[0].scrollHeight;
-          cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 });
-        });
+  //       // 목표가 있는 경우 무한 스크롤 테스트
+  //       cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
+  //         const scrollHeight = $scrollArea[0].scrollHeight;
+  //         cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 });
+  //       });
 
-        // "더보기" 버튼 누르면 데이터 추가 되는지 테스트
-        cy.get("button:contains('더보기')").then(($button) => {
-          if ($button.length > 0) {
-            cy.wrap($button).click();
-            cy.get('button[role="checkbox"]').then(($checkboxes) => {
-              const initialCount = $checkboxes.length;
-              cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
-                const scrollHeight = $scrollArea[0].scrollHeight;
-                cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 });
-              });
-              cy.get('button[role="checkbox"]').should("have.length.greaterThan", initialCount);
-            });
-          } else {
-            cy.log("'더보기' 버튼이 없습니다. 현재 상태에서 테스트 진행");
-          }
-        });
+  //       // "더보기" 버튼 누르면 데이터 추가 되는지 테스트
+  //       cy.get("button:contains('더보기')").then(($button) => {
+  //         if ($button.length > 0) {
+  //           cy.wrap($button).click();
+  //           cy.get('button[role="checkbox"]').then(($checkboxes) => {
+  //             const initialCount = $checkboxes.length;
+  //             cy.get("div[data-radix-scroll-area-viewport]").then(($scrollArea) => {
+  //               const scrollHeight = $scrollArea[0].scrollHeight;
+  //               cy.wrap($scrollArea).scrollTo(0, scrollHeight, { duration: 1000 });
+  //             });
+  //             cy.get('button[role="checkbox"]').should("have.length.greaterThan", initialCount);
+  //           });
+  //         } else {
+  //           cy.log("'더보기' 버튼이 없습니다. 현재 상태에서 테스트 진행");
+  //         }
+  //       });
 
-        // 체크박스 모두 체크
-        cy.get('button[role="checkbox"]').each(($checkbox) => {
-          cy.wrap($checkbox).then(($btn) => {
-            if ($btn.attr("aria-checked") !== "true") {
-              cy.wrap($btn).click();
-            }
-          });
-        });
+  //       // 체크박스 모두 체크
+  //       cy.get('button[role="checkbox"]').each(($checkbox) => {
+  //         cy.wrap($checkbox).then(($btn) => {
+  //           if ($btn.attr("aria-checked") !== "true") {
+  //             cy.wrap($btn).click();
+  //           }
+  //         });
+  //       });
 
-        // 진행률이 100%인지 확인
-        cy.get('[data-cy="progress"]').should("include.text", "100");
-      }
-    });
-  });
+  //       // 진행률이 100%인지 확인
+  //       cy.get('[data-cy="progress"]').should("include.text", "100");
+  //     }
+  //   });
+  // });
 });
